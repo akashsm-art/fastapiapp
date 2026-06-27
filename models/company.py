@@ -1,9 +1,7 @@
-from sqlalchemy import Column, Integer, String ,Enum ,relationship
+from sqlalchemy import Column, Integer, String ,Enum ,ForeignKey
 from database import Base , engine ,SessionLocal
-from sqlalchemy.orm import declarative_base 
+from sqlalchemy.orm import relationship
 
-Base = declarative_base()
-   
 
 
 class Company(Base):
@@ -14,4 +12,5 @@ class Company(Base):
     email = Column(String, unique=True)
     phone = Column(String, index=True)
     jobs = relationship("Job", back_populates="company")
-    
+
+

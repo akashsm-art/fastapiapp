@@ -38,6 +38,7 @@ def update_company(company_id: int, company: companyUpdate, db: Session = Depend
     db_company = db.query(Company).filter(Company.id == company_id).first()
     if not db_company:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Company not found")
+    # pyrefly: ignore [deprecated]
     update_data = company.dict(exclude_unset=True)
     for key, value in update_data.items():
         setattr(db_company, key, value)

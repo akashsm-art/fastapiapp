@@ -11,6 +11,7 @@ class Company(Base):
     name = Column(String, nullable=False, index=True)
     email = Column(String, unique=True)
     phone = Column(String, index=True)
+    location = Column(String, index=True)
     jobs = relationship("Job", back_populates="company")
 
 

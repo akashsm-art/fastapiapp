@@ -1,10 +1,21 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from routers import company
 from routers import job
 from database import Base,engine
 from models import company as company_model,job as job_model
 
 app = FastAPI()
+
+# Allow the frontend to call the API from any origin
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 print("Engine is : ",engine)
 #Base.metadata.create_all(bind=engine)
 app.include_router(company.router)

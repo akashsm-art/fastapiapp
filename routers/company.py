@@ -12,6 +12,12 @@ companies = []
 @router.post("/",status_code=status.HTTP_201_CREATED,
 response_model=companyResponse)
 def create_company(company: companyCreate,db: Session = Depends(get_db)):
+    existing_company = db.query(Company).filter(Company.email == company.email).first()
+    if existing_company:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Company with this email already exists"
+        )
     db_company = Company(**company.dict())
     db.add(db_company)
     db.commit()
@@ -40,6 +46,13 @@ def update_company(company_id: int, company: companyUpdate, db: Session = Depend
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Company not found")
     # pyrefly: ignore [deprecated]
     update_data = company.dict(exclude_unset=True)
+    if "email" in update_data and update_data["email"] != db_company.email:
+        existing_company = db.query(Company).filter(Company.email == update_data["email"]).first()
+        if existing_company:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Company with this email already exists"
+            )
     for key, value in update_data.items():
         setattr(db_company, key, value)
     db.commit()

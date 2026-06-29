@@ -22,6 +22,10 @@ class companyUpdate(companyBase):
 
 class companyResponse(companyBase):
     id: int
+    name: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    location: Optional[str] = None
     jobs: list[JobResponse] = []
 
     class Config:

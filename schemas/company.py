@@ -20,7 +20,7 @@ class companyUpdate(companyBase):
 
 class companyResponse(companyBase):
     id: int
-    jobs: list[JobResponse]
+    jobs: list[JobResponse] = []
 
     class Config:
         from_attributes = True

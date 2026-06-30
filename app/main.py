@@ -5,6 +5,7 @@ from routers import job
 from database import Base,engine
 from models import company as company_model,job as job_model
 
+
 app = FastAPI()
 
 # Allow the frontend to call the API from any origin

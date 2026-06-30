@@ -1,18 +1,14 @@
 
-import CompanyCard from "./components/CompanyCard";
-import JobCard from "./components/JobCard";
 import Welcome from "./components/Welcome";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
-
-
-function App() {
+function App(){
   return (
     <>
-      <NavBar />
-      <Welcome />
-      <CompanyCard />
-      <JobCard />
+      <NavBar/>
+      <Welcome/>
+      <Footer/>
     </>
   )
 }

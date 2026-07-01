@@ -34,7 +34,11 @@
 -sqlalchemy-orm(obj relational mapping )
 -fastapi-- web framework
 -uvicorn-- server for runniing fastapi
--application--`uvicorn app.main:app --reload`
+-application--
+  ```bash
+  cd backend
+  uvicorn app.main:app --reload
+  ```
 -psycopg2 -- postgresql driver
 -pydantics -- data validation
 -typing extensions-- type hints
@@ -54,10 +58,13 @@
 
 
 
+```bash
+cd backend
 pip install alembic
 alembic init alembic
 alembic revision --autogenerate -m "initial migration"
 alembic upgrade head
+```
 ybs-cfhr-hwp
 
 

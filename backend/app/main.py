@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import company
 from routers import job
 from database import Base,engine
-from models import company as company_model,job as job_model
+from models import company as company_model,job as job_model,users as user_model
+from routers import company,job,auth
 
 
 app = FastAPI()
@@ -21,6 +22,7 @@ print("Engine is : ",engine)
 #Base.metadata.create_all(bind=engine)
 app.include_router(company.router)
 app.include_router(job.router)
+app.include_router(auth.router)
 
 @app.get("/")
 def read_root():

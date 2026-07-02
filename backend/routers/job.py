@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from schemas.job import JobCreate, JobUpdate, JobResponse
 from models.job import Job
+from models.company import Company
 from sqlalchemy.orm import Session
 from database import get_db
 
@@ -10,6 +11,9 @@ router = APIRouter(prefix="/job", tags=["job"])
 @router.post("/", status_code=status.HTTP_201_CREATED,
 response_model=JobResponse)
 def create_job(job: JobCreate, db: Session = Depends(get_db)):
+    company = db.query(Company).filter(Company.id == job.company_id).first()
+    if not company:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Company not found")
     db_job = Job(**job.dict())
     db.add(db_job)
     db.commit()
@@ -37,6 +41,10 @@ def update_job(job_id: int, job: JobUpdate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Job not found")
     # pyrefly: ignore [deprecated]
     update_data = job.dict(exclude_unset=True)
+    if "company_id" in update_data:
+        company = db.query(Company).filter(Company.id == update_data["company_id"]).first()
+        if not company:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Company not found")
     for key, value in update_data.items():
         setattr(db_job, key, value)
     db.commit()

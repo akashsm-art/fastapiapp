@@ -3,7 +3,7 @@ import type {job} from "../types/job";
 
 const API_BASE_URL = "http://localhost:8000";
 export async function getJobs(): Promise<job[]> {
-    const response = await axios.get(`${API_BASE_URL}/job`);
+    const response = await axios.get(`${API_BASE_URL}/job/`);
     return response.data;
 }
 
@@ -14,7 +14,7 @@ export async function getJob(id: number):
 }
 
 export async function createJob(job: job): Promise<job> {
-    const response = await axios.post(`${API_BASE_URL}/job`,job);
+    const response = await axios.post(`${API_BASE_URL}/job/`,job);
     return response.data;
 }
 

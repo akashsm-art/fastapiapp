@@ -5,13 +5,15 @@ from models.company import Company
 from models.job import Job  # Required: ensures Job model is registered for SQLAlchemy relationship resolution
 from sqlalchemy.orm import Session,relationship
 from database import get_db, SessionLocal
+from utils.oauth2 import role_required,get_current_user
+
 
 router = APIRouter(prefix="/company", tags=["company"])
 companies = []
 
 @router.post("/",status_code=status.HTTP_201_CREATED,
 response_model=companyResponse)
-def create_company(company: companyCreate,db: Session = Depends(get_db)):
+def create_company(company: companyCreate,db: Session = Depends(get_db),current_user = Depends(role_required(["admin"]))):
     existing_company = db.query(Company).filter(Company.email == company.email).first()
     if existing_company:
         raise HTTPException(

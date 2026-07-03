@@ -9,7 +9,8 @@ from utils.oauth2 import role_required,get_current_user
 
 
 router = APIRouter(prefix="/company", tags=["company"])
-companies = []
+
+
 
 @router.post("/",status_code=status.HTTP_201_CREATED,
 response_model=companyResponse)
@@ -34,7 +35,7 @@ def get_all_company(db: Session = Depends(get_db)):
 
 @router.get("/{company_id}",status_code=status.HTTP_200_OK,
 response_model=companyResponse)
-def read_company(company_id: int, db: Session = Depends(get_db)):
+def read_company(company_id: int, db: Session = Depends(get_db),current_user = Depends(role_required(["admin"]))):
     db_company = db.query(Company).filter(Company.id == company_id).first()
     if not db_company:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Company not found")
@@ -42,7 +43,7 @@ def read_company(company_id: int, db: Session = Depends(get_db)):
 
 @router.put("/{company_id}",status_code=status.HTTP_200_OK,
 response_model=companyResponse)
-def update_company(company_id: int, company: companyUpdate, db: Session = Depends(get_db)):
+def update_company(company_id: int, company: companyUpdate, db: Session = Depends(get_db),current_user = Depends(role_required(["admin"]))):
     db_company = db.query(Company).filter(Company.id == company_id).first()
     if not db_company:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Company not found")
@@ -62,7 +63,7 @@ def update_company(company_id: int, company: companyUpdate, db: Session = Depend
     return db_company
 
 @router.delete("/{company_id}",status_code=status.HTTP_200_OK)
-def delete_company(company_id: int, db: Session = Depends(get_db)):
+def delete_company(company_id: int, db: Session = Depends(get_db),current_user = Depends(role_required(["admin"]))):
     db_company = db.query(Company).filter(Company.id == company_id).first()
     if not db_company:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Company not found")

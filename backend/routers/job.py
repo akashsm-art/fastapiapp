@@ -5,12 +5,13 @@ from models.job import Job
 from models.company import Company
 from sqlalchemy.orm import Session
 from database import get_db
+from utils.oauth2 import role_required,get_current_user
 
 router = APIRouter(prefix="/job", tags=["job"])
 
 @router.post("/", status_code=status.HTTP_201_CREATED,
 response_model=JobResponse)
-def create_job(job: JobCreate, db: Session = Depends(get_db)):
+def create_job(job: JobCreate, db: Session = Depends(get_db),current_user = Depends(role_required(["admin","hr"]))):
     company = db.query(Company).filter(Company.id == job.company_id).first()
     if not company:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Company not found")
@@ -22,12 +23,12 @@ def create_job(job: JobCreate, db: Session = Depends(get_db)):
 
 @router.get("/", status_code=status.HTTP_200_OK,
 response_model=list[JobResponse])
-def get_all_jobs(db: Session = Depends(get_db)):
+def get_all_jobs(db: Session = Depends(get_db),current_user = Depends(role_required(["admin"]))):
     return db.query(Job).all()
 
 @router.get("/{job_id}", status_code=status.HTTP_200_OK,
 response_model=JobResponse)
-def read_job(job_id: int, db: Session = Depends(get_db)):
+def read_job(job_id: int, db: Session = Depends(get_db),current_user = Depends(role_required(["admin"]))):
     db_job = db.query(Job).filter(Job.id == job_id).first()
     if not db_job:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Job not found")
@@ -35,7 +36,7 @@ def read_job(job_id: int, db: Session = Depends(get_db)):
 
 @router.put("/{job_id}", status_code=status.HTTP_200_OK,
 response_model=JobResponse)
-def update_job(job_id: int, job: JobUpdate, db: Session = Depends(get_db)):
+def update_job(job_id: int, job: JobUpdate, db: Session = Depends(get_db),current_user = Depends(role_required(["admin","hr"]))):
     db_job = db.query(Job).filter(Job.id == job_id).first()
     if not db_job:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Job not found")
@@ -52,7 +53,7 @@ def update_job(job_id: int, job: JobUpdate, db: Session = Depends(get_db)):
     return db_job
 
 @router.delete("/{job_id}", status_code=status.HTTP_200_OK)
-def delete_job(job_id: int, db: Session = Depends(get_db)):
+def delete_job(job_id: int, db: Session = Depends(get_db),current_user = Depends(role_required(["admin","hr"]))):
     db_job = db.query(Job).filter(Job.id == job_id).first()
     if not db_job:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Job not found")

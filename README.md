@@ -94,3 +94,30 @@ refresh token -> used to refresh access token
 
 pip install python-multipart
 
+
+
+#Architecture
+backend/
+  |--app/
+      |--main.py
+      |--models/
+      |--schemas/
+      |--routers/
+      |--utils/
+      |--database/
+      
+
+
+frontend/
+    |--src/
+        |--components/
+        |--pages/
+        |--services/
+        |--utils/       
+
+
+# run server
+```bash
+cd backend
+uvicorn app.main:app --reload
+```

@@ -1,6 +1,4 @@
 import type {company} from "../types/company";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { getCompanies } from "../services/CompanyService";
 import {useState} from "react";
 
 type Props = {

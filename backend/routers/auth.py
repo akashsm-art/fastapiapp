@@ -6,7 +6,7 @@ from database import get_db
 from utils.security import hash_password, verify_password
 from schemas.user import UserCreate, UserUpdate, UserResponse,Login_User
 from utils.token import create_access_token
-
+from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -30,19 +30,17 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/login", response_model=Token)
-def login_user(user: Login_User, db: Session = Depends(get_db)):
-    existing_user= db.query(User).filter(User.email == user.email).first()
+def login_user(user: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    existing_user= db.query(User).filter(User.email == user.username).first()
     if not existing_user:
         raise HTTPException(status_code=400, detail="User not found")
 
     if not verify_password(user.password, existing_user.hashed_password):
         raise HTTPException(status_code=401, detail="Incorrect password")
 
-
-
     access_token=create_access_token(data={"sub":str(existing_user.id),"role":existing_user.role})
 
-    return {"token":access_token,"token_type":"Bearer"}
+    return {"access_token": access_token, "token_type": "bearer"}
 
     
 

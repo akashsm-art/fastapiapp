@@ -4,14 +4,30 @@ import JobCard from "./components/JobCard";
 import Welcome from "./components/Welcome";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer"
+import ChatBot from "./components/ChatBot"
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import { useEffect, useState } from "react";
 import { getCompanies, createCompany, updateCompany, deleteCompany } from "./services/CompanyService";
 import type { company } from "./types/company";
 
 function App() {
+  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+  const [page, setPage] = useState<"login" | "register">("login");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [companies, setCompanies] = useState<company[]>([]);
+
+  const handleLogin = (accessToken: string) => {
+    localStorage.setItem("token", accessToken);
+    setToken(accessToken);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+    setPage("login");
+  };
 
   async function fetchCompanies() {
     setLoading(true);
@@ -27,8 +43,10 @@ function App() {
   }
 
   useEffect(() => {
-    fetchCompanies();
-  }, []);
+    if (token) {
+      fetchCompanies();
+    }
+  }, [token]);
 
   const handleEdit = async (company: company) => {
     try {
@@ -57,6 +75,20 @@ function App() {
     }
   }
 
+  // ---- Not logged in: show Login or Register ----
+  if (!token) {
+    if (page === "register") {
+      return <Register onSwitchToLogin={() => setPage("login")} />;
+    }
+    return (
+      <Login
+        onLogin={handleLogin}
+        onSwitchToRegister={() => setPage("register")}
+      />
+    );
+  }
+
+  // ---- Logged in: show dashboard ----
   if (loading) {
     return <div>Loading companies...</div>
   }
@@ -68,6 +100,9 @@ function App() {
   return (
     <>
       <NavBar />
+      <button onClick={handleLogout} style={{ position: "fixed", top: 16, right: 24, zIndex: 100, padding: "8px 18px", cursor: "pointer" }}>
+        Logout
+      </button>
       <Welcome />
       <CompanyCard
         companies={companies}
@@ -77,6 +112,7 @@ function App() {
       />
       <JobCard />
       <Footer />
+      <ChatBot />
     </>
   )
 }

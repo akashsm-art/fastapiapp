@@ -121,3 +121,8 @@ frontend/
 cd backend
 uvicorn app.main:app --reload
 ```
+
+
+grok api key = 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
+
+

@@ -124,5 +124,6 @@ uvicorn app.main:app --reload
 
 
 
-
+with rag
+user query->embed done by embeddings model->vector->semantic search done by qdra
 

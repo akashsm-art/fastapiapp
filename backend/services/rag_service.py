@@ -1,18 +1,19 @@
-
-from urllib import response
-import os 
+import os
+from pathlib import Path
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from services.qdrant_service import search_jobs
-load_dotenv()
-llm=ChatGroq(
-    model="llame-3.3-70b-versatile",
+
+load_dotenv(Path(__file__).resolve().parent.parent / "utils" / ".env")
+
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",
     api_key=os.getenv("GROQ_API_KEY"),
     temperature=0.3,
 )
 
-rag_prompt + ChatPromptTemplate.from_messages([
+rag_prompt = ChatPromptTemplate.from_messages([
     ("system", """ you are a job search assistant.
     use the following job listing retrieved from the database to answer If no relevent jobs are found , say so clearly.
     

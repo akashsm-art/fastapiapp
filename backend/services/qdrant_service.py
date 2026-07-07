@@ -1,16 +1,15 @@
-from sqlalchemy.engine import characteristics
-from asyncio import queues
-import os 
+import os
+from pathlib import Path
 from dotenv import load_dotenv
-from qdrant_client import qdrant_client
+from qdrant_client import QdrantClient
 from qdrant_client.models import Distance,VectorParams, PointStruct
 from fastembed import TextEmbedding
 from sqlalchemy.orm import Session
 from models.job import Job
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parent.parent / "utils" / ".env")
 
-COLLECTION_NAME = " job_descriptions"
+COLLECTION_NAME = "job_descriptions"
 VECTOR_SIZE = 384
 
 qdrant = QdrantClient(
@@ -61,7 +60,7 @@ def embed_all_jobs(db: Session) -> int:
     qdrant.upsert(collection_name= COLLECTION_NAME, points=points)
     return len(points)
 
-def search_jobs(query:str,top_k:int =5) ->list[dict]:
+def search_jobs(query: str, top_k: int = 5) -> list[dict]:
     ensure_collection()
     query_vector = embed_text(query)
     results = qdrant.query_points(

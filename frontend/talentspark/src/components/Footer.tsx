@@ -1,14 +1,15 @@
 function Footer() {
   return (
-    <footer style={{
-      marginTop: 'auto',
-      padding: '24px 16px',
-      borderTop: '1px solid var(--border)',
-      textAlign: 'center',
-      color: 'var(--text)',
-      fontSize: '14px'
-    }}>
-      <p>&copy; {new Date().getFullYear()} TalentSpark. All rights reserved.</p>
+    <footer className="footer">
+      <div className="footer-content">
+        <span className="footer-leaf">🍃</span>
+        <p>
+          &copy; {new Date().getFullYear()}{" "}
+          <span className="footer-brand">TalentSpark</span>. All rights
+          reserved.
+        </p>
+        <span className="footer-leaf">🌿</span>
+      </div>
     </footer>
   );
 }

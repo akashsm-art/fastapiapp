@@ -1,4 +1,5 @@
 
+import './App.css'
 import CompanyCard from "./components/CompanyCard";
 import JobCard from "./components/JobCard";
 import Welcome from "./components/Welcome";
@@ -90,18 +91,28 @@ function App() {
 
   // ---- Logged in: show dashboard ----
   if (loading) {
-    return <div>Loading companies...</div>
+    return (
+      <div className="loading-state">
+        <div className="loading-spinner" />
+        <p>Loading companies...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return (
+      <div className="error-state">
+        <span className="error-icon">⚠️</span>
+        <p>Error: {error.message}</p>
+      </div>
+    );
   }
 
   return (
     <>
       <NavBar />
-      <button onClick={handleLogout} style={{ position: "fixed", top: 16, right: 24, zIndex: 100, padding: "8px 18px", cursor: "pointer" }}>
-        Logout
+      <button className="btn-logout" onClick={handleLogout} style={{ position: "fixed", top: 18, right: 28, zIndex: 200 }}>
+        🚪 Logout
       </button>
       <Welcome />
       <CompanyCard

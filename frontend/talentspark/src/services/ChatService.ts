@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:8000/chat";
+import api from "./api";
 
 export interface ChatMessage {
   role: "human" | "ai";
@@ -20,7 +18,7 @@ export interface ChatHistoryResponse {
 
 /** Simple one-shot chat (no memory) */
 export const sendMessage = async (query: string): Promise<ChatResponse> => {
-  const res = await axios.post<ChatResponse>(`${API_URL}/`, { query });
+  const res = await api.post<ChatResponse>("/chat/", { query });
   return res.data;
 };
 
@@ -29,7 +27,7 @@ export const sendMessageWithMemory = async (
   query: string,
   sessionId: string
 ): Promise<ChatResponse> => {
-  const res = await axios.post<ChatResponse>(`${API_URL}/memory`, {
+  const res = await api.post<ChatResponse>("/chat/memory", {
     query,
     session_id: sessionId,
   });
@@ -40,13 +38,13 @@ export const sendMessageWithMemory = async (
 export const getChatHistory = async (
   sessionId: string
 ): Promise<ChatHistoryResponse> => {
-  const res = await axios.get<ChatHistoryResponse>(
-    `${API_URL}/history/${sessionId}`
+  const res = await api.get<ChatHistoryResponse>(
+    `/chat/history/${sessionId}`
   );
   return res.data;
 };
 
 /** Clear chat history for a session */
 export const clearChatHistory = async (sessionId: string): Promise<void> => {
-  await axios.delete(`${API_URL}/history/${sessionId}`);
+  await api.delete(`/chat/history/${sessionId}`);
 };

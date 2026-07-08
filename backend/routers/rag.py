@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel
 
 from database import get_db
@@ -47,10 +47,10 @@ def rag_search(request: RAGSearchRequest):
 
 
 @router.post("/embed-jobs", response_model=EmbedJobsResponse)
-def embed_jobs(db: Session = Depends(get_db)):
+async def embed_jobs(db: AsyncSession = Depends(get_db)):
     """Embed all jobs from the database into the Qdrant vector store."""
     try:
-        count = embed_all_jobs(db)
+        count = await embed_all_jobs(db)
         return EmbedJobsResponse(
             message=f"Successfully embedded {count} jobs.",
             jobs_embedded=count,

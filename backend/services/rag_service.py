@@ -5,7 +5,7 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from services.qdrant_service import search_jobs
 
-load_dotenv(Path(__file__).resolve().parent.parent / "utils" / ".env")
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 llm = ChatGroq(
     model="llama-3.3-70b-versatile",

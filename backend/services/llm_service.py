@@ -3,8 +3,8 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os
 
-# Load environment variables from the utils/.env file
-load_dotenv(Path(__file__).resolve().parent.parent / "utils" / ".env")
+# Load environment variables from the backend/.env file
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 # ---- Configuration ----
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")

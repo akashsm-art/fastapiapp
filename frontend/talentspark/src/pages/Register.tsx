@@ -64,13 +64,28 @@ function Register({ onSwitchToLogin }: Props) {
           </div>
           <div className="input-wrapper">
             <span className="input-icon">💼</span>
-            <input
-              type="text"
+            <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              placeholder="Role (e.g. Recruiter, Candidate)"
               required
-            />
+              style={{
+                width: "100%",
+                padding: "12px 16px 12px 40px",
+                borderRadius: "8px",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                backgroundColor: "rgba(255, 255, 255, 0.05)",
+                color: "#f3f4f6",
+                fontSize: "14px",
+                outline: "none",
+                appearance: "none",
+                cursor: "pointer"
+              }}
+            >
+              <option value="" disabled style={{ backgroundColor: "#1e1e24", color: "#9ca3af" }}>Select Role</option>
+              <option value="candidate" style={{ backgroundColor: "#1e1e24", color: "#f3f4f6" }}>Candidate (Job Seeker)</option>
+              <option value="hr" style={{ backgroundColor: "#1e1e24", color: "#f3f4f6" }}>HR Specialist</option>
+              <option value="admin" style={{ backgroundColor: "#1e1e24", color: "#f3f4f6" }}>Administrator</option>
+            </select>
           </div>
           <button className="btn btn-primary" type="submit">
             🌿 Create Account

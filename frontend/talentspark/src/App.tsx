@@ -8,6 +8,8 @@ import Footer from "./components/Footer"
 import ChatBot from "./components/ChatBot"
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import FallingLeaves from "./components/FallingLeaves";
+import Contact from "./components/Contact";
 import { useEffect, useState } from "react";
 import { getCompanies, createCompany, updateCompany, deleteCompany } from "./services/CompanyService";
 import type { company } from "./types/company";
@@ -71,8 +73,9 @@ function App() {
     try {
       await createCompany(company);
       await fetchCompanies();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to add company", error);
+      alert("Failed to add company. Ensure you are logged in as an Administrator (admin role) and the email is unique.");
     }
   }
 
@@ -110,18 +113,26 @@ function App() {
 
   return (
     <>
+      <FallingLeaves />
       <NavBar />
       <button className="btn-logout" onClick={handleLogout} style={{ position: "fixed", top: 18, right: 28, zIndex: 200 }}>
         🚪 Logout
       </button>
-      <Welcome />
-      <CompanyCard
-        companies={companies}
-        onedit={handleEdit}
-        ondelete={handleDelete}
-        onadd={handleAdd}
-      />
-      <JobCard />
+      <div id="home">
+        <Welcome />
+      </div>
+      <div id="companies">
+        <CompanyCard
+          companies={companies}
+          onedit={handleEdit}
+          ondelete={handleDelete}
+          onadd={handleAdd}
+        />
+      </div>
+      <div id="jobs">
+        <JobCard />
+      </div>
+      <Contact />
       <Footer />
       <ChatBot />
     </>

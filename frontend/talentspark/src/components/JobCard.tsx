@@ -107,7 +107,7 @@ function JobCard() {
   if (loading) {
     return (
       <section className="job-card-section">
-        <p style={{ textAlign: "center", color: "#9ca3af" }}>Loading opportunities...</p>
+        <p style={{ textAlign: "center", color: "#6b7280" }}>Loading opportunities...</p>
       </section>
     );
   }
@@ -115,7 +115,7 @@ function JobCard() {
   if (error) {
     return (
       <section className="job-card-section">
-        <p style={{ textAlign: "center", color: "#f87171" }}>Error: {error}</p>
+        <p style={{ textAlign: "center", color: "#dc2626" }}>Error: {error}</p>
       </section>
     );
   }
@@ -128,7 +128,7 @@ function JobCard() {
 
       <div className="companies-grid">
         {jobs.length === 0 ? (
-          <p style={{ gridColumn: "1/-1", textAlign: "center", color: "#9ca3af" }}>
+          <p style={{ gridColumn: "1/-1", textAlign: "center", color: "#6b7280" }}>
             No opportunities listed yet. Add one below!
           </p>
         ) : (
@@ -146,9 +146,9 @@ function JobCard() {
                       width: "100%",
                       padding: "8px 12px",
                       borderRadius: "6px",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      color: "#fff",
+                      border: "1.5px solid #e2e5ee",
+                      backgroundColor: "rgba(255,255,255,0.9)",
+                      color: "#1f2937",
                       marginBottom: "8px"
                     }}
                   />
@@ -161,9 +161,9 @@ function JobCard() {
                       width: "100%",
                       padding: "8px 12px",
                       borderRadius: "6px",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      color: "#fff",
+                      border: "1.5px solid #e2e5ee",
+                      backgroundColor: "rgba(255,255,255,0.9)",
+                      color: "#1f2937",
                       marginBottom: "8px",
                       resize: "vertical"
                     }}
@@ -192,16 +192,16 @@ function JobCard() {
                       width: "100%",
                       padding: "8px 12px",
                       borderRadius: "6px",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      color: "#fff",
+                      border: "1.5px solid #e2e5ee",
+                      backgroundColor: "rgba(255,255,255,0.9)",
+                      color: "#1f2937",
                       marginBottom: "12px",
                       outline: "none"
                     }}
                   >
                     <option value={0} disabled>Select Company</option>
                     {companies.map((c) => (
-                      <option key={c.id} value={c.id} style={{ backgroundColor: "#1e1e24", color: "#fff" }}>
+                      <option key={c.id} value={c.id} style={{ backgroundColor: "#fff", color: "#1f2937" }}>
                         {c.name}
                       </option>
                     ))}
@@ -227,7 +227,7 @@ function JobCard() {
                     <span>{getCompanyName(job.company_id)}</span>
                   </div>
                   {job.description && (
-                    <p className="job-description" style={{ fontSize: "14px", color: "#d1d5db", margin: "8px 0" }}>
+                    <p className="job-description" style={{ fontSize: "14px", color: "#6b7280", margin: "8px 0" }}>
                       {job.description}
                     </p>
                   )}
@@ -292,15 +292,15 @@ function JobCard() {
                   width: "100%",
                   padding: "12px",
                   borderRadius: "8px",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
-                  backgroundColor: "rgba(255, 255, 255, 0.05)",
-                  color: "#f3f4f6",
+                  border: "1.5px solid #e2e5ee",
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
+                  color: "#1f2937",
                   outline: "none",
                 }}
               >
                 <option value={0} disabled>Select Partner Company</option>
                 {companies.map((c) => (
-                  <option key={c.id} value={c.id} style={{ backgroundColor: "#1e1e24", color: "#f3f4f6" }}>
+                  <option key={c.id} value={c.id} style={{ backgroundColor: "#fff", color: "#1f2937" }}>
                     {c.name}
                   </option>
                 ))}
@@ -317,9 +317,9 @@ function JobCard() {
                   width: "100%",
                   padding: "12px",
                   borderRadius: "8px",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
-                  backgroundColor: "rgba(255, 255, 255, 0.05)",
-                  color: "#f3f4f6",
+                  border: "1.5px solid #e2e5ee",
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
+                  color: "#1f2937",
                   outline: "none",
                   resize: "vertical",
                 }}

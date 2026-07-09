@@ -72,19 +72,19 @@ function Register({ onSwitchToLogin }: Props) {
                 width: "100%",
                 padding: "12px 16px 12px 40px",
                 borderRadius: "8px",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
-                backgroundColor: "rgba(255, 255, 255, 0.05)",
-                color: "#f3f4f6",
+                border: "1.5px solid #e2e5ee",
+                backgroundColor: "rgba(255, 255, 255, 0.9)",
+                color: "#1f2937",
                 fontSize: "14px",
                 outline: "none",
                 appearance: "none",
                 cursor: "pointer"
               }}
             >
-              <option value="" disabled style={{ backgroundColor: "#1e1e24", color: "#9ca3af" }}>Select Role</option>
-              <option value="candidate" style={{ backgroundColor: "#1e1e24", color: "#f3f4f6" }}>Candidate (Job Seeker)</option>
-              <option value="hr" style={{ backgroundColor: "#1e1e24", color: "#f3f4f6" }}>HR Specialist</option>
-              <option value="admin" style={{ backgroundColor: "#1e1e24", color: "#f3f4f6" }}>Administrator</option>
+              <option value="" disabled style={{ backgroundColor: "#fff", color: "#9198a8" }}>Select Role</option>
+              <option value="candidate" style={{ backgroundColor: "#fff", color: "#1f2937" }}>Candidate (Job Seeker)</option>
+              <option value="hr" style={{ backgroundColor: "#fff", color: "#1f2937" }}>HR Specialist</option>
+              <option value="admin" style={{ backgroundColor: "#fff", color: "#1f2937" }}>Administrator</option>
             </select>
           </div>
           <button className="btn btn-primary" type="submit">

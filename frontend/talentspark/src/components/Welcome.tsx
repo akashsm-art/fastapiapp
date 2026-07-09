@@ -16,9 +16,7 @@ function Welcome() {
         </p>
 
         <div className="counter-display">
-          <button className="btn btn-secondary btn-sm" onClick={increment}>
-            🌱 Spark it
-          </button>
+          <button className="btn-logout btn-sm" onClick={increment}>🌿 Spark it</button>
           <span className="count-value">{count}</span>
         </div>
 

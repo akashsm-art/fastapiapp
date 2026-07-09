@@ -42,11 +42,22 @@ def chat_with_session(query: str, session_id: str) -> str:
     Send a message within a session. The conversation history is
     automatically loaded and appended to by RunnableWithMessageHistory.
     """
-    response = chat_with_memory.invoke(
-        {"user_query": query},
-        config={"configurable": {"session_id": session_id}},
-    )
-    return response.content
+    try:
+        response = chat_with_memory.invoke(
+            {"user_query": query},
+            config={"configurable": {"session_id": session_id}},
+        )
+        return response.content
+    except Exception as e:
+        print(f"[Langchain Service Warning] Failed invoking with history: {e}. Falling back.")
+        from services.llm_service import get_local_fallback_chat_response
+        history = get_history(session_id)
+        reply = get_local_fallback_chat_response(query)
+        # Manually append to message history so it behaves like the real chain
+        history.add_user_message(query)
+        history.add_ai_message(reply)
+        return reply
+
 
 
 def get_session_history(session_id: str) -> list[dict]:
